@@ -89,5 +89,18 @@ namespace FSpot.Preferences.Tests
             found.ShouldBeFalse();
             result.ShouldBeFalse();
         }
+
+        [Test]
+        public void DefaultValueForUnsetPreference()
+        {
+            var key = "DefaultKey";
+            var store = new MemoryPreferenceStore();
+            store.Set<object>(key, null);
+            store.Count.ShouldBe(1);
+
+            var found = store.TryGet(key, out int result);
+            found.ShouldBeTrue();
+            result.ShouldBe(0);
+        }
     }
 }

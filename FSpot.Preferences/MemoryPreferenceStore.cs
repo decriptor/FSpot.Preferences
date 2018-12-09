@@ -13,19 +13,23 @@ namespace FSpot.Preferences
 
         public int Count => store.Count;
 
-        public bool TryGet<T>(string key, out T val)
+        public bool TryGet<T>(string key, out T result)
         {
-            if (store.ContainsKey(key))
-            {
-                val = (T)store[key];
-                return true;
+            if (store.TryGetValue (key, out var value)) {
+                if (value == null) {
+                    result = default(T);
+                    return true;
+                } else if (value.GetType() == typeof(T)) {
+                    result = (T)value;
+                    return true;
+                }
             }
 
-            val = default(T);
+            result = default(T);
             return false;
         }
 
-        public void Set(string key, object value)
+        public void Set<T>(string key, T value)
         {
             store[key] = value;
         }

@@ -7,6 +7,6 @@ namespace FSpot.Preferences
     public interface IPreferenceStore
     {
         bool TryGet<T>(string key, out T val);
-        void Set(string key, object value); 
+        void Set<T>(string key, T value); 
     }
 }
